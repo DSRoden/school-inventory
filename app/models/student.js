@@ -21,4 +21,8 @@ Student.find = function(query, cb){
   });
 };
 
+Student.prototype.average = function(test1, test2) {
+  return parseFloat(((this.test1 + this.test2)/2).toFixed(1));
+};
+
 module.exports = Student;

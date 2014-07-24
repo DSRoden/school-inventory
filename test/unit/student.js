@@ -64,5 +64,13 @@ describe('Student', function() {
       });
     });
   });
+
+  describe('#average', function(){
+    it('should find the average of a students test scores', function() {
+      var Harry = new Student('Harry', 'chemistry', '90', '95');
+      var average = Harry.average();
+      expect(average).to.equal(92.5);
+    });
+  });
 });
 
