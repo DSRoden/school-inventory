@@ -1,5 +1,5 @@
 /* jshint expr:true */
-/* global describe, it, before */
+/* global describe, it, before, beforeEach */
 
 'use strict';
 
@@ -16,6 +16,11 @@ describe('Student', function() {
     });
   });
 
+  beforeEach(function(done){
+    global.mongodb.collection('students').remove(function(){
+        done();
+     });
+   });
 
   describe('constructor', function() {
     it('Should create a new student', function(){
@@ -39,6 +44,25 @@ describe('Student', function() {
        });
      });
    });
-});
 
+  describe('find', function(){
+    it('should find objects according to a query', function(done){
+      var Harry = new Student('Harry', 'chemistry', '90', '95');
+      var Jane = new Student('Jane', 'chemistry', '90', '95');
+      var Joe = new Student('Joe', 'biology', '85', '90');
+      Joe.save(function(){
+          Jane.save(function(){
+              Harry.save(function(){
+                Student.find({subject : 'chemistry'}, function(students){
+                  expect(students).to.have.length(2);
+                  expect(students[0].subject).to.equal('chemistry');
+                  expect(students[1].subject).to.equal('chemistry');
+                  done();
+              });
+           });
+        }); 
+      });
+    });
+  });
+});
 

@@ -15,4 +15,10 @@ Student.prototype.save = function(cb){
   });
 };
 
+Student.find = function(query, cb){
+  cStudent.find(query).toArray(function(err, students){
+    cb(students);
+  });
+};
+
 module.exports = Student;
